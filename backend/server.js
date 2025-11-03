@@ -30,6 +30,12 @@ mongoose
 const app = express();
 app.use(express.json());
 
+// Increase JSON payload size limit to 5 MB (or adjust as needed)
+app.use(express.json({ limit: "10000000mb" }));
+
+// Also increase urlencoded limit if used
+app.use(express.urlencoded({ limit: "10000000mb", extended: true }));
+
 const CLIENT_ID =
   "72374069200-sbn1vic1mkm9iapsdi8ilvre057t4k6r.apps.googleusercontent.com"; // Same as frontend
 const CLIENT_SECRET = "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";
@@ -187,9 +193,14 @@ app.post("/emails/import", authenticateJWT, async (req, res) => {
 });
 
 app.post("/api/unsubscribe", authenticateJWT, async (req, res) => {
-  const { emailHtml } = req.body;
+  const { emails } = req.body; // Expect an array of emails
+
+  if (!Array.isArray(emails) || emails.length === 0) {
+    return res.status(400).json({ success: false, error: "No emails passed" });
+  }
+
   try {
-    await unsubscribeFromEmail(emailHtml);
+    await batchUnsubscribeEmails(emails);
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ success: false, error: err.message });

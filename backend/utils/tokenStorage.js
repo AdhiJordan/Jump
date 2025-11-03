@@ -1,4 +1,3 @@
-// tokenStorage.js
 const UserToken = require("./models/UserToken");
 
 async function saveTokensToDB(userId, tokens) {
@@ -9,7 +8,7 @@ async function saveTokensToDB(userId, tokens) {
     expiryDate: expiry_date,
   };
   if (refresh_token) {
-    update.refreshToken = refresh_token; // Update refresh token only if present
+    update.refreshToken = refresh_token;
   }
 
   return UserToken.findOneAndUpdate({ userId }, update, {

@@ -1,4 +1,4 @@
-import UserToken from "./../models/userToken.js"; // adjust import path as needed
+import UserToken from "./../models/userToken.js";
 
 export default async function getUserTokensFromDB(userId) {
   try {
@@ -10,7 +10,6 @@ export default async function getUserTokensFromDB(userId) {
     return {
       access_token: record.accessToken,
       refresh_token: record.refreshToken,
-      scope: "...", // Optional: store if you want
       token_type: "Bearer",
       expiry_date: record.expiryDate,
     };

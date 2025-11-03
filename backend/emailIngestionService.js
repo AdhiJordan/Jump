@@ -1,8 +1,6 @@
 import { classifyEmail, summarizeEmail } from "./aiService.js";
 
 export async function ingestEmailsForUser(userId, tokens) {
-  // Gmail fetch logic unchanged...
-
   const categories = await Category.find({ userId });
 
   for (const msg of res.data.messages) {
@@ -14,7 +12,6 @@ export async function ingestEmailsForUser(userId, tokens) {
 
     const emailText = extractTextFromGmailMessage(message.data);
 
-    // Reuse helper functions
     const categoryId = await classifyEmail(categories, emailText);
     const summary = await summarizeEmail(emailText);
 

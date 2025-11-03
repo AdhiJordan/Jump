@@ -9,7 +9,7 @@ export async function classifyEmail(categories, emailText) {
   const prompt = buildCategorizationPrompt(categories, emailText);
 
   const response = await openai.chat.completions.create({
-    model: "gpt-4o-mini", // Choose appropriate model
+    model: "gpt-4o-mini",
     messages: [{ role: "user", content: prompt }],
   });
 
