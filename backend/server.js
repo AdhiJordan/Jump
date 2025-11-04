@@ -1,7 +1,5 @@
 import express from "express";
 import cors from "cors";
-// import emailRoutes from "./routes/emailRoutes.js";
-//const { google } = require("googleapis");
 import { google } from "googleapis";
 import { listEmails } from "./gmailService.js";
 import { default as getUserTokensFromDB } from "./data/userTokens.js";
@@ -30,32 +28,29 @@ mongoose
 const app = express();
 app.use(express.json());
 
-// Increase JSON payload size limit to 5 MB (or adjust as needed)
 app.use(express.json({ limit: "10000000mb" }));
 
-// Also increase urlencoded limit if used
 app.use(express.urlencoded({ limit: "10000000mb", extended: true }));
 
 const CLIENT_ID =
   "72374069200-sbn1vic1mkm9iapsdi8ilvre057t4k6r.apps.googleusercontent.com"; // Same as frontend
 const CLIENT_SECRET = "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";
-const REDIRECT_URI = "http://localhost:4000/auth/google/callback";
+const REDIRECT_URI = "https://jump-mcmg.vercel.app/auth/google/callback";
 
 const oAuth2Client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
-  "http://localhost:4000/auth/google/callback"
+  "https://jump-mcmg.vercel.app/auth/google/callback"
 );
 
 app.use(
   cors({
-    origin: "http://localhost:5173", // frontend origin
+    origin: "https://jump-woad.vercel.app/",
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
 );
 
-// Step 1: Trigger Google OAuth consent URL (use GET)
 app.get("/auth/google", (req, res) => {
   const SCOPES = [
     "https://www.googleapis.com/auth/gmail.readonly",
@@ -74,7 +69,6 @@ app.get("/auth/google", (req, res) => {
   res.redirect(authUrl);
 });
 
-// Step 2: Handle OAuth callback (must be GET)
 app.get("/auth/google/callback", async (req, res) => {
   const { code } = req.query;
   if (!code) return res.status(400).send("No auth code in query");
@@ -105,21 +99,16 @@ app.get("/auth/google/callback", async (req, res) => {
   }
 });
 
-// Route to verify Google token from frontend POST (Add this for your fetch POST)
 app.post("/api/auth/google", async (req, res) => {
   const { token } = req.body;
   console.log("%%%%%%%%", token);
   if (!token) return res.status(400).send("No token provided");
   try {
-    // Verify token using google-auth-library
     const ticket = await oAuth2Client.verifyIdToken({
       idToken: token,
       audience: CLIENT_ID,
     });
-    const payload = ticket.getPayload(); // user info from token
-    // const userId = "113438802828677635763";
-    // await saveTokensToDB(userId, token);
-    // You can create or find user in your DB, and return session info or JWT here
+    const payload = ticket.getPayload();
     res.json({ success: true, user: payload });
   } catch (error) {
     console.error("Token verification error:", error);
@@ -185,15 +174,14 @@ app.get(
 // /routes/emailRoutes.js
 app.post("/emails/import", authenticateJWT, async (req, res) => {
   const userId = req.user.sub;
-  const tokens = await getUserTokensFromDB(userId); // retrieve stored OAuth tokens
-
+  const tokens = await getUserTokensFromDB(userId);
   await ingestEmailsForUser(userId, tokens);
 
   res.json({ success: true, message: "Emails imported and processed" });
 });
 
 app.post("/api/unsubscribe", authenticateJWT, async (req, res) => {
-  const { emails } = req.body; // Expect an array of emails
+  const { emails } = req.body;
 
   if (!Array.isArray(emails) || emails.length === 0) {
     return res.status(400).json({ success: false, error: "No emails passed" });
@@ -207,6 +195,6 @@ app.post("/api/unsubscribe", authenticateJWT, async (req, res) => {
   }
 });
 
-// You can now use oAuth2Client with Gmail API to import/sort/archive emails
-
-app.listen(4000, () => console.log("Server running at http://localhost:4000"));
+app.listen(4000, () =>
+  console.log("Server running at https://jump-mcmg.vercel.app")
+);

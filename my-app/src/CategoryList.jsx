@@ -24,7 +24,7 @@ export default function CategoryList({ categories, onSelectCategory }) {
             }}
           >
             <strong>{cat.name}</strong>
-            <strong>{cat.snippet}</strong>
+
             <p style={{ margin: 0, fontSize: "small", color: "#555" }}>
               {cat.description}
             </p>

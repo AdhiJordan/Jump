@@ -13,9 +13,12 @@ export default function Dashboard({ user, token, onAddCategory }) {
 
   useEffect(() => {
     async function fetchCategories() {
-      const res = await fetch("http://localhost:4000/api/categories-all", {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const res = await fetch(
+        "https://jump-mcmg.vercel.app/api/categories-all",
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
       const data = await res.json();
       setCategories(data);
     }
@@ -28,7 +31,7 @@ export default function Dashboard({ user, token, onAddCategory }) {
   };
 
   const connectAccount = () => {
-    window.location.href = "http://localhost:4000/auth/google";
+    window.location.href = "https://jump-mcmg.vercel.app/auth/google";
   };
 
   return (

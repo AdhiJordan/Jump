@@ -29,7 +29,7 @@ export async function getCategoryEmailsWithAI(req, res) {
     const CLIENT_ID =
       "72374069200-sbn1vic1mkm9iapsdi8ilvre057t4k6r.apps.googleusercontent.com";
     const CLIENT_SECRET = "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";
-    const REDIRECT_URI = "http://localhost:4000/auth/google/callback";
+    const REDIRECT_URI = "https://jump-mcmg.vercel.app/auth/google/callback";
 
     const tokens = await getUserTokensFromDB(userId);
     const config = {

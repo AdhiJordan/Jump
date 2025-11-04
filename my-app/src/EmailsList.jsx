@@ -15,7 +15,7 @@ export default function EmailsList({ token, user, categoryId, categoryName }) {
       setError(null);
       try {
         const res = await fetch(
-          `http://localhost:4000/api/categories/${categoryId}/emails/${categoryName}`,
+          `https://jump-mcmg.vercel.app/api/categories/${categoryId}/emails/${categoryName}`,
           {
             method: "GET",
             headers: {
@@ -68,14 +68,17 @@ export default function EmailsList({ token, user, categoryId, categoryName }) {
       // Map selected emails to an array of their ids only
       const emailIds = selectedEmails.map((email) => email.id);
 
-      const response = await fetch("http://localhost:4000/api/unsubscribe", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ emailIds }), // Sending only ids
-      });
+      const response = await fetch(
+        "https://jump-mcmg.vercel.app/api/unsubscribe",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ emailIds }), // Sending only ids
+        }
+      );
 
       const data = await response.json();
 

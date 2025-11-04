@@ -7,7 +7,7 @@ export default function AddCategoryForm({ onCategoryAdded, token }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("http://localhost:4000/api/categories", {
+    const res = await fetch("https://jump-mcmg.vercel.app/api/categories", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,

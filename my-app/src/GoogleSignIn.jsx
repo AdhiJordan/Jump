@@ -18,11 +18,14 @@ export default function GoogleSignIn({
       }
 
       try {
-        const response = await fetch("http://localhost:4000/api/auth/google", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ token: credential }),
-        });
+        const response = await fetch(
+          "https://jump-mcmg.vercel.app/api/auth/google",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token: credential }),
+          }
+        );
         const data = await response.json();
 
         if (data.success) {
@@ -50,7 +53,7 @@ export default function GoogleSignIn({
     <div>
       <button
         onClick={() =>
-          (window.location.href = "http://localhost:4000/auth/google")
+          (window.location.href = "https://jump-mcmg.vercel.app/auth/google")
         }
       >
         Sign in with Google (Redirect)
