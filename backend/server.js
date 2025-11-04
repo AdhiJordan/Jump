@@ -84,7 +84,7 @@ app.get("/auth/google/callback", async (req, res) => {
     });
     const payload = ticket.getPayload();
     // Store tokens or create user session as needed
-    const userId = "113438802828677635763";
+    const userId = payload.sub;
     await saveTokensToDB(userId, tokens);
     const redirectUrl = new URL("https://jump-woad.vercel.app");
     // res.redirect("http://localhost:5173");
