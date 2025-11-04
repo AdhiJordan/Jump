@@ -45,7 +45,7 @@ const oAuth2Client = new google.auth.OAuth2(
 
 app.use(
   cors({
-    origin: "https://jump-woad.vercel.app/",
+    origin: "https://jump-woad.vercel.app",
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   })
@@ -85,7 +85,7 @@ app.get("/auth/google/callback", async (req, res) => {
     // Store tokens or create user session as needed
     const userId = "113438802828677635763";
     await saveTokensToDB(userId, tokens);
-    const redirectUrl = new URL("http://localhost:5173/");
+    const redirectUrl = new URL("https://jump-woad.vercel.app");
     // res.redirect("http://localhost:5173");
     redirectUrl.searchParams.set(
       "user",

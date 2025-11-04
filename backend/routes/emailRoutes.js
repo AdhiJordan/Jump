@@ -6,7 +6,7 @@ const router = Router();
 const CLIENT_ID =
   "72374069200-sbn1vic1mkm9iapsdi8ilvre057t4k6r.apps.googleusercontent.com"; // Same as frontend
 const CLIENT_SECRET = "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";
-const REDIRECT_URI = "http://localhost:5173";
+const REDIRECT_URI = "https://jump-woad.vercel.app";
 
 router.get("/emails", async (req, res) => {
   const userId = req.user.id;
