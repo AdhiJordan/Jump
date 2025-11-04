@@ -12,7 +12,7 @@ import { getCategoryEmailsWithAI } from "./controller/emailController.js";
 import { ingestEmailsForUser } from "./emailIngestionService.js";
 
 const mongoURI =
-  "mongodb+srv://adhithyaprabhu77_db_user:GhsNisbqmfvrKgYi@jumpcluster.rotj16f.mongodb.net/?appName=JumpCluster"; // replace with your MongoDB connection string
+  "mongodb+srv://adhithyaprabhu77_db_user:GhsNisbqmfvrKgYi@jumpcluster.rotj16f.mongodb.net/?appName=JumpCluster&retryWrites=true&w=majority"; // replace with your MongoDB connection string
 
 mongoose
   .connect(mongoURI, {
