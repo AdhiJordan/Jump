@@ -18,7 +18,7 @@ mongoose
   .connect(mongoURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    serverSelectionTimeoutMS: 10000,
+    serverSelectionTimeoutMS: 30000,
   })
   .then(() => console.log("MongoDB connected"))
   .catch((err) => {
